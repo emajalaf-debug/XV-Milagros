@@ -166,7 +166,6 @@
   <div class="gallery-grid" id="galleryGrid">
     <img class="reveal-item" id="galleryImg1" src="assets/images/gallery-1.jpg" alt="Foto 1" loading="lazy">
     <img class="reveal-item" id="galleryImg2" src="assets/images/gallery-2.jpg" alt="Foto 2" loading="lazy">
-    <img class="reveal-item" id="galleryImg3" src="assets/images/gallery-3.jpg" alt="Foto 3" loading="lazy">
   </div>
 </section>
 
@@ -309,69 +308,6 @@
         </div>
         <p class="host-copied-msg" id="hostCopiedMsg" hidden>¡Copiado!</p>
       </details>
-    </div>
-
-    <!-- ===== FOTOS DE LA GALERÍA ===== -->
-    <hr class="host-divider">
-    <h2 class="host-title">Fotos de la galería</h2>
-    <p class="host-lead">
-      Subí hasta 3 fotos. Se publican directo en tu invitación (a todos los
-      invitados) — no hace falta tocar ningún código.
-    </p>
-
-    <details class="host-details host-github-setup" id="githubSetup">
-      <summary id="githubSetupSummary">⚙️ Conectar con GitHub (una sola vez)</summary>
-      <p class="host-note">
-        Esto conecta el panel con tu repositorio de GitHub para poder publicar
-        las fotos. Lo hacés una sola vez:
-      </p>
-      <ol class="host-instructions">
-        <li>Andá a <strong>github.com/settings/tokens</strong> (Settings → Developer settings → Personal access tokens → Tokens classic).</li>
-        <li>Tocá "Generate new token (classic)". Ponele un nombre, y en los permisos marcá la casilla <strong>"repo"</strong>.</li>
-        <li>Generalo y copiá el código que te da (empieza con "ghp_...") — solo se muestra una vez.</li>
-      </ol>
-
-      <label for="ghOwner">Tu usuario de GitHub</label>
-      <input type="text" id="ghOwner" placeholder="emajalaf-debug">
-
-      <label for="ghRepo">Nombre del repositorio</label>
-      <input type="text" id="ghRepo" placeholder="cumple-15">
-
-      <label for="ghBranch">Rama (dejalo así si no sabés)</label>
-      <input type="text" id="ghBranch" value="main">
-
-      <label for="ghToken">Token de acceso personal</label>
-      <input type="password" id="ghToken" placeholder="ghp_...">
-
-      <button type="button" id="ghSaveBtn" class="btn btn-primary btn-block">Guardar conexión</button>
-      <p class="host-copied-msg" id="ghSavedMsg" hidden>¡Conexión guardada en este navegador!</p>
-    </details>
-
-    <div class="gallery-uploader">
-      <div class="gallery-slot" data-slot="1">
-        <img class="gallery-slot-preview" id="ghPreview1" alt="Foto 1 actual">
-        <label class="btn btn-outline gallery-slot-btn">
-          Elegir foto 1
-          <input type="file" accept="image/*" id="ghFile1" hidden>
-        </label>
-        <p class="gallery-slot-status" id="ghStatus1"></p>
-      </div>
-      <div class="gallery-slot" data-slot="2">
-        <img class="gallery-slot-preview" id="ghPreview2" alt="Foto 2 actual">
-        <label class="btn btn-outline gallery-slot-btn">
-          Elegir foto 2
-          <input type="file" accept="image/*" id="ghFile2" hidden>
-        </label>
-        <p class="gallery-slot-status" id="ghStatus2"></p>
-      </div>
-      <div class="gallery-slot" data-slot="3">
-        <img class="gallery-slot-preview" id="ghPreview3" alt="Foto 3 actual">
-        <label class="btn btn-outline gallery-slot-btn">
-          Elegir foto 3
-          <input type="file" accept="image/*" id="ghFile3" hidden>
-        </label>
-        <p class="gallery-slot-status" id="ghStatus3"></p>
-      </div>
     </div>
   </div>
 </section>
