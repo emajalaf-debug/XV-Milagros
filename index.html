@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mis 15 años - Milagros</title>
+<meta name="description" content="Invitación a Mis 15 años - Milagros">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="site-header" id="inicio">
+  <div class="header-inner">
+    <span class="logo">Mis XV <span class="logo-name">Milagros</span></span>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== MENU OVERLAY ===== -->
+<nav class="menu-overlay" id="menuOverlay">
+  <ul>
+    <li><a href="#inicio" class="menu-link">Inicio</a></li>
+    <li><a href="#lugar" class="menu-link">Lugar</a></li>
+    <li><a href="#itinerario" class="menu-link">Itinerario</a></li>
+    <li><a href="#galeria" class="menu-link">Galería</a></li>
+    <li><a href="#detalles" class="menu-link">Detalles</a></li>
+    <li><a href="#confirmar" class="menu-link">Confirmar</a></li>
+  </ul>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <img class="hero-bg" src="assets/images/hero.jpg" alt="Foto de la quinceañera">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Mis XV Años</p>
+    <h1 class="hero-name">Milagros</h1>
+    <div class="hero-date-row">
+      <span class="line"></span>
+      <p class="hero-date">21 de noviembre, 2026</p>
+      <span class="line"></span>
+    </div>
+
+    <p class="guest-greeting" id="guestGreeting" hidden></p>
+
+    <a href="#confirmar" class="btn btn-primary">Confirmar Asistencia</a>
+
+    <div class="countdown" id="countdown" aria-live="polite">
+      <div class="countdown-item">
+        <span class="countdown-number" id="cdDays">00</span>
+        <span class="countdown-label">Días</span>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <span class="countdown-number" id="cdHours">00</span>
+        <span class="countdown-label">Hs</span>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <span class="countdown-number" id="cdMinutes">00</span>
+        <span class="countdown-label">Min</span>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <span class="countdown-number" id="cdSeconds">00</span>
+        <span class="countdown-label">Seg</span>
+      </div>
+    </div>
+  </div>
+  <a href="#lugar" class="scroll-cue" aria-label="Bajar">⌄</a>
+</section>
+
+<!-- ===== LUGAR ===== -->
+<section class="section section-light" id="lugar">
+  <div class="card place-card reveal">
+    <p class="section-eyebrow">Fiesta y Recepción</p>
+    <p class="place-time">21:00 HS</p>
+    <h3 class="place-venue">Quinta "La Soñada"</h3>
+    <p class="place-address">Tocá el botón para ver la ubicación exacta</p>
+    <a href="#" id="mapLink" target="_blank" rel="noopener" class="btn btn-outline">
+      <span class="pin">📍</span> Ver mapa
+    </a>
+  </div>
+</section>
+
+<!-- ===== DETALLES (dress code) ===== -->
+<section class="section section-cream dress-section" id="detalles">
+  <div class="card reveal">
+    <span class="dress-icon" aria-hidden="true">👗</span>
+    <h2 class="section-title">Dress Code</h2>
+    <p class="section-body">
+      Queremos que luzcas espectacular en este día tan especial.
+      El estilo sugerido para la fiesta es:
+    </p>
+    <div class="dress-box dress-box--pulse">
+      <p class="dress-style">Estrictamente Formal</p>
+      <p class="dress-note">* Te pedimos con cariño evitar vestir de color verde.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ITINERARIO ===== -->
+<section class="section section-light" id="itinerario">
+  <div class="card reveal">
+    <h2 class="section-title">Itinerario de la Fiesta</h2>
+    <p class="section-subtitle">No te pierdas de ningún momento</p>
+    <span class="divider"></span>
+
+    <ol class="timeline" id="timeline">
+      <span class="timeline-fill" id="timelineFill"></span>
+      <li class="timeline-item">
+        <span class="timeline-dot"></span>
+        <p class="timeline-time">🕐 21:00 HS</p>
+        <h4 class="timeline-title">Recepción de Invitados</h4>
+        <p class="timeline-text">Los invitados llegan a la fiesta para prepararnos para una noche mágica.</p>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-dot"></span>
+        <p class="timeline-time">🕐 22:00 HS</p>
+        <h4 class="timeline-title">Llegada de la Quinceañera</h4>
+        <p class="timeline-text">La entrada triunfal de Milagros para comenzar a celebrar.</p>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-dot"></span>
+        <p class="timeline-time">🕐 23:00 HS</p>
+        <h4 class="timeline-title">Cena</h4>
+        <p class="timeline-text">Disfrutaremos de una deliciosa cena con platos especialmente seleccionados.</p>
+      </li>
+      <li class="timeline-item">
+        <span class="timeline-dot"></span>
+        <p class="timeline-time">🕐 00:00 HS</p>
+        <h4 class="timeline-title">Baile</h4>
+        <p class="timeline-text">¡Se abre la pista de baile! Música, sorpresas y diversión hasta que salga el sol.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ===== GALERÍA ===== -->
+<section class="section section-cream" id="galeria">
+  <h2 class="section-title reveal">Galería de Fotos</h2>
+  <p class="section-subtitle">Momentos guardados en el corazón</p>
+  <span class="divider"></span>
+
+  <div class="gallery-grid">
+    <img class="reveal-item" src="assets/images/gallery-1.svg" alt="Foto 1" loading="lazy">
+    <img class="reveal-item" src="assets/images/gallery-2.svg" alt="Foto 2" loading="lazy">
+    <img class="reveal-item" src="assets/images/gallery-3.svg" alt="Foto 3" loading="lazy">
+    <img class="reveal-item" src="assets/images/gallery-4.svg" alt="Foto 4" loading="lazy">
+    <img class="reveal-item" src="assets/images/gallery-5.svg" alt="Foto 5" loading="lazy">
+    <img class="reveal-item" src="assets/images/gallery-6.svg" alt="Foto 6" loading="lazy">
+  </div>
+</section>
+
+<!-- ===== REGALOS ===== -->
+<section class="section section-light" id="regalos">
+  <div class="card reveal">
+    <span class="gift-icon">🎁</span>
+    <h2 class="section-title">Regalos</h2>
+    <p class="section-body">
+      Tu presencia es mi mayor regalo. Pero si deseás hacerme un detalle,
+      podés realizar una contribución a mi cuenta bancaria:
+    </p>
+    <div class="bank-box">
+      <div class="bank-row">
+        <p class="bank-label">Titular:</p>
+        <p class="bank-value">Milagros Agostina Altamirano Alvarez</p>
+      </div>
+      <div class="bank-row">
+        <p class="bank-label">CBU:</p>
+        <p class="bank-value">0000003100006989588485</p>
+      </div>
+      <div class="bank-row">
+        <p class="bank-label">Alias:</p>
+        <p class="bank-value">milagrosaltamiranomp</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONFIRMACIÓN ===== -->
+<section class="section section-dark" id="confirmar">
+  <h2 class="section-title section-title--light">Confirmación de Asistencia</h2>
+  <p class="section-subtitle section-subtitle--light">Acompañame a celebrar</p>
+  <span class="divider divider--light"></span>
+
+  <form class="rsvp-card reveal" id="rsvpForm">
+    <label class="field">
+      <span>Nombre y apellido</span>
+      <input type="text" id="rsvpName" name="nombre" placeholder="Tu nombre completo" required>
+    </label>
+
+    <label class="field">
+      <span>¿Asistirás?</span>
+      <select id="rsvpAttend" name="asistencia" required>
+        <option value="Sí, asistiré">Sí, asistiré 🎉</option>
+        <option value="No podré asistir">No podré asistir</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Cantidad de acompañantes</span>
+      <input type="number" id="rsvpGuests" name="acompanantes" min="0" max="10" value="0">
+    </label>
+
+    <label class="field">
+      <span>Restricciones alimentarias</span>
+      <select id="rsvpDiet" name="dieta">
+        <option value="Ninguna (Como de todo)">Ninguna (Como de todo)</option>
+        <option value="Vegetariano">Vegetariano</option>
+        <option value="Vegano">Vegano</option>
+        <option value="Celíaco / Sin TACC">Celíaco / Sin TACC</option>
+        <option value="Otra">Otra</option>
+      </select>
+    </label>
+
+    <label class="field">
+      <span>Mensaje para la quinceañera</span>
+      <textarea id="rsvpMessage" name="mensaje" rows="3" placeholder="Dedícale unas lindas palabras a Milagros..."></textarea>
+    </label>
+
+    <button type="submit" class="btn btn-primary btn-block">Enviar a WhatsApp</button>
+  </form>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer">
+  <p class="footer-title">Mis 15 Años</p>
+  <p class="footer-meta">Milagros · 21.11.2026</p>
+  <span class="divider divider--light"></span>
+  <button type="button" id="hostModeTrigger" class="host-mode-trigger" aria-label="Panel del organizador">•</button>
+</footer>
+
+<!-- ===== PANEL DEL ORGANIZADOR (oculto) =====
+     Sólo se muestra si el link tiene ?panel=organizador. No es visible
+     para los invitados en el link normal de la invitación. -->
+<section id="hostPanel" class="host-panel" hidden>
+  <div class="host-panel-inner">
+    <span class="host-badge">Panel privado — no compartir esta vista</span>
+
+    <!-- Paso 1: datos del invitado -->
+    <div id="hostStep1">
+      <h2 class="host-title">¿A quién invitás?</h2>
+      <p class="host-lead">
+        Completá el nombre y la cantidad de personas. Después tocás
+        "Siguiente" y queda todo listo para compartir.
+      </p>
+
+      <label for="hostFamilia">Nombre y apellido (o familia)</label>
+      <input type="text" id="hostFamilia" placeholder="Familia Pérez">
+
+      <label for="hostCupo">Cantidad de personas invitadas</label>
+      <input type="number" id="hostCupo" min="1" max="20" placeholder="4">
+
+      <button type="button" id="hostGenerateBtn" class="btn btn-primary btn-block">Siguiente</button>
+    </div>
+
+    <!-- Paso 2: compartir -->
+    <div id="hostStep2" hidden>
+      <h2 class="host-title">Listo para enviar</h2>
+      <p class="host-lead" id="hostSummary"></p>
+
+      <button type="button" id="hostWaBtn" class="btn btn-primary btn-block host-wa-btn">Compartir</button>
+
+      <button type="button" id="hostBackBtn" class="host-back-btn">← Cambiar datos</button>
+
+      <details class="host-details">
+        <summary>Ver el link (por si preferís copiarlo)</summary>
+        <div class="host-result-row">
+          <input type="text" id="hostLinkOutput" readonly>
+          <button type="button" id="hostCopyBtn" class="btn btn-outline">Copiar</button>
+        </div>
+        <p class="host-copied-msg" id="hostCopiedMsg" hidden>¡Copiado!</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MÚSICA DE FONDO ===== -->
+<audio id="bgMusic" loop preload="auto">
+  <source src="assets/audio/music.mp3" type="audio/mpeg">
+</audio>
+<button id="muteBtn" class="mute-btn" aria-label="Activar o silenciar música">
+  <span id="muteIcon">♪</span>
+</button>
+
+<script src="js/script.js"></script>
+</body>
+</html>
