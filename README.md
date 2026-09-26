@@ -4,6 +4,19 @@ Sitio de una sola página para invitar a tus XV, con música de fondo,
 galería de fotos, itinerario, ubicación con mapa y confirmación de
 asistencia por WhatsApp.
 
+## ✨ Extras agregados
+
+- **Vista previa al compartir el link**: cuando mandes el link por WhatsApp,
+  redes, etc., va a mostrar automáticamente la foto de portada y el título
+  (usa las etiquetas Open Graph en `index.html`). Si el link no muestra la
+  foto al principio, puede ser que WhatsApp haya guardado en caché una
+  versión vieja — probá con el link en una conversación nueva.
+- **Ícono de pestaña (favicon)**: un corazoncito en el color de la paleta.
+- **Botón "Agregar a mi calendario"**: en la sección Lugar, al lado de
+  "Ver mapa". Abre Google Calendar con la fecha, hora y lugar ya cargados.
+  Si cambiás la fecha del evento, actualizá también `eventStartUTC` y
+  `eventEndUTC` en `js/script.js` (están comentadas con instrucciones).
+
 ## 🔒 Panel privado para vos (generar links por familia)
 
 Este sitio incluye un panel oculto, solo para vos como organizador, para generar

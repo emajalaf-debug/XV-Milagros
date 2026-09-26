@@ -64,6 +64,25 @@ if (mapLink) {
   mapLink.href = CONFIG.mapsUrl;
 }
 
+/* =============== AGREGAR A MI CALENDARIO (Google Calendar) =========== */
+const calendarLink = document.getElementById("calendarLink");
+if (calendarLink) {
+  // Fecha y hora del evento en formato UTC (AAAAMMDDTHHMMSSZ).
+  // Ajustá estas dos líneas si cambia la fecha/hora de la fiesta.
+  const eventStartUTC = "20261122T000000Z"; // 21/11/2026 21:00 hs (ART, UTC-3)
+  const eventEndUTC = "20261122T070000Z"; // 22/11/2026 04:00 hs (ART, UTC-3)
+
+  const calendarParams = new URLSearchParams({
+    action: "TEMPLATE",
+    text: "Mis 15 Años - Milagros",
+    dates: `${eventStartUTC}/${eventEndUTC}`,
+    details: "¡Los espero para celebrar mis 15 años!",
+    location: "Quinta \"La Soñada\"",
+  });
+
+  calendarLink.href = `https://calendar.google.com/calendar/render?${calendarParams.toString()}`;
+}
+
 /* ===================== MÚSICA DE FONDO =================== */
 const bgMusic = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
@@ -100,9 +119,22 @@ rsvpForm.addEventListener("submit", (e) => {
 
   const nombre = document.getElementById("rsvpName").value.trim();
   const asistencia = document.getElementById("rsvpAttend").value;
-  const acompanantes = document.getElementById("rsvpGuests").value;
+  const guestsField = document.getElementById("rsvpGuests");
+  let acompanantes = guestsField.value;
   const dieta = document.getElementById("rsvpDiet").value;
   const mensaje = document.getElementById("rsvpMessage").value.trim();
+
+  // Si esta invitación tiene un cupo fijo asignado, no se puede confirmar
+  // una cantidad mayor a ese cupo.
+  if (guestsField.max) {
+    const max = parseInt(guestsField.max, 10);
+    const valor = parseInt(acompanantes, 10);
+    if (!Number.isNaN(max) && (Number.isNaN(valor) || valor > max)) {
+      alert(`Esta invitación tiene un cupo de ${max} ${max === 1 ? "persona" : "personas"}. Ingresá un número igual o menor.`);
+      guestsField.focus();
+      return;
+    }
+  }
 
   const lines = [
     "¡Hola! Quiero confirmar mi asistencia al cumpleaños de 15 de Milagros.",
@@ -258,6 +290,14 @@ if (revealEls.length && "IntersectionObserver" in window) {
       if (guestsLabel) {
         guestsLabel.textContent = `¿Cuántos de las ${n} personas invitadas van a asistir?`;
       }
+      // Si escriben o pegan un número más alto que el cupo, lo bajamos
+      // automáticamente al máximo permitido.
+      guestsField.addEventListener("input", () => {
+        const valor = parseInt(guestsField.value, 10);
+        if (!Number.isNaN(valor) && valor > n) {
+          guestsField.value = n;
+        }
+      });
     }
   }
 })();
@@ -266,8 +306,9 @@ if (revealEls.length && "IntersectionObserver" in window) {
    Se puede abrir de dos formas: con el link ?panel=organizador (ideal
    una vez publicado en Vercel, para guardarlo en favoritos), o tocando
    el puntito disimulado al pie de página. En ambos casos pide una
-   clave simple antes de mostrar el panel, para que un invitado que
-   encuentre el puntito o el link no pueda entrar sin saberla. */
+   clave simple (con un cartel propio, no el de Chrome) antes de
+   mostrar el panel, para que un invitado que encuentre el puntito o
+   el link no pueda entrar sin saberla. */
 (function () {
   // Cambiá esta clave por la que quieras usar vos.
   const HOST_PASSCODE = "milagros15";
@@ -276,25 +317,66 @@ if (revealEls.length && "IntersectionObserver" in window) {
   const hostTrigger = document.getElementById("hostModeTrigger");
   if (!hostPanel) return;
 
-  function openHostPanel() {
-    const intentada = window.prompt("Clave del panel del organizador:");
-    if (intentada === null) return; // canceló, no hacemos nada
-    if (intentada.trim().toLowerCase() !== HOST_PASSCODE.toLowerCase()) {
-      alert("Clave incorrecta.");
-      return;
-    }
+  const passcodeOverlay = document.getElementById("passcodeOverlay");
+  const passcodeInput = document.getElementById("passcodeInput");
+  const passcodeError = document.getElementById("passcodeError");
+  const passcodeSubmit = document.getElementById("passcodeSubmit");
+  const passcodeCancel = document.getElementById("passcodeCancel");
+
+  function revealHostPanel() {
     document.body.classList.add("host-mode");
     hostPanel.hidden = false;
     window.scrollTo(0, 0);
   }
 
+  function closePasscodeCard() {
+    passcodeOverlay.hidden = true;
+    passcodeInput.value = "";
+    passcodeError.hidden = true;
+  }
+
+  function tryPasscode() {
+    const intentada = passcodeInput.value.trim().toLowerCase();
+    if (intentada === HOST_PASSCODE.toLowerCase()) {
+      closePasscodeCard();
+      revealHostPanel();
+    } else {
+      passcodeError.hidden = false;
+      passcodeInput.classList.remove("is-shake");
+      // Forzamos un reflow para poder repetir la animación de sacudida.
+      void passcodeInput.offsetWidth;
+      passcodeInput.classList.add("is-shake");
+      passcodeInput.select();
+    }
+  }
+
+  function openPasscodeCard() {
+    passcodeOverlay.hidden = false;
+    passcodeError.hidden = true;
+    passcodeInput.value = "";
+    setTimeout(() => passcodeInput.focus(), 50);
+  }
+
+  if (passcodeSubmit) passcodeSubmit.addEventListener("click", tryPasscode);
+  if (passcodeCancel) passcodeCancel.addEventListener("click", closePasscodeCard);
+  if (passcodeInput) {
+    passcodeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") tryPasscode();
+    });
+  }
+  if (passcodeOverlay) {
+    passcodeOverlay.addEventListener("click", (e) => {
+      if (e.target === passcodeOverlay) closePasscodeCard();
+    });
+  }
+
   const params = new URLSearchParams(window.location.search);
   if (params.get("panel") === "organizador") {
-    openHostPanel();
+    openPasscodeCard();
   }
 
   if (hostTrigger) {
-    hostTrigger.addEventListener("click", openHostPanel);
+    hostTrigger.addEventListener("click", openPasscodeCard);
   }
 
   const step1 = document.getElementById("hostStep1");
@@ -373,5 +455,187 @@ if (revealEls.length && "IntersectionObserver" in window) {
     const mensaje = buildMessage();
     const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(mensaje)}`;
     window.open(url, "_blank", "noopener");
+  });
+})();
+
+/* ============ FOTOS DE LA GALERÍA (subida directa a GitHub) ============
+   El sitio es estático (no tiene servidor propio), así que para que una
+   foto subida acá se vea igual para todos los invitados, se guarda
+   directo en el repositorio de GitHub del organizador (que es lo que usa
+   Vercel para reconstruir el sitio). Se necesita conectar una sola vez
+   con un token de acceso personal de GitHub. */
+(function () {
+  const githubSetup = document.getElementById("githubSetup");
+  if (!githubSetup) return; // esta sección solo existe dentro del panel
+
+  const ghOwner = document.getElementById("ghOwner");
+  const ghRepo = document.getElementById("ghRepo");
+  const ghBranch = document.getElementById("ghBranch");
+  const ghToken = document.getElementById("ghToken");
+  const ghSaveBtn = document.getElementById("ghSaveBtn");
+  const ghSavedMsg = document.getElementById("ghSavedMsg");
+  const githubSetupSummary = document.getElementById("githubSetupSummary");
+
+  const STORAGE_KEY = "quinceGithubConfig";
+
+  function loadConfig() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveConfig(config) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(config));
+    } catch (e) {}
+  }
+
+  function updateSetupSummary() {
+    const cfg = loadConfig();
+    if (cfg && cfg.owner && cfg.repo && cfg.token) {
+      githubSetupSummary.textContent = `✅ Conectado a ${cfg.owner}/${cfg.repo}`;
+    } else {
+      githubSetupSummary.textContent = "⚙️ Conectar con GitHub (una sola vez)";
+    }
+  }
+
+  const savedConfig = loadConfig();
+  if (savedConfig) {
+    ghOwner.value = savedConfig.owner || "";
+    ghRepo.value = savedConfig.repo || "";
+    ghBranch.value = savedConfig.branch || "main";
+    ghToken.value = savedConfig.token || "";
+  }
+  updateSetupSummary();
+
+  ghSaveBtn.addEventListener("click", () => {
+    const owner = ghOwner.value.trim();
+    const repo = ghRepo.value.trim();
+    const branch = ghBranch.value.trim() || "main";
+    const token = ghToken.value.trim();
+
+    if (!owner || !repo || !token) {
+      alert("Completá tu usuario, el nombre del repositorio y el token.");
+      return;
+    }
+
+    saveConfig({ owner, repo, branch, token });
+    updateSetupSummary();
+    ghSavedMsg.hidden = false;
+    setTimeout(() => { ghSavedMsg.hidden = true; }, 3000);
+  });
+
+  // Redimensiona la imagen antes de subirla (para no ocupar de más).
+  function resizeImage(file, maxSize) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          let { width, height } = img;
+          if (width > height && width > maxSize) {
+            height = Math.round((height * maxSize) / width);
+            width = maxSize;
+          } else if (height > maxSize) {
+            width = Math.round((width * maxSize) / height);
+            height = maxSize;
+          }
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL("image/jpeg", 0.82);
+          resolve(dataUrl);
+        };
+        img.onerror = reject;
+        img.src = e.target.result;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function uploadToGithub(slot, dataUrl) {
+    const cfg = loadConfig();
+    if (!cfg || !cfg.owner || !cfg.repo || !cfg.token) {
+      throw new Error("Primero conectá tu cuenta de GitHub (arriba).");
+    }
+
+    const path = `assets/images/gallery-${slot}.jpg`;
+    const apiUrl = `https://api.github.com/repos/${cfg.owner}/${cfg.repo}/contents/${path}`;
+    const base64Content = dataUrl.split(",")[1];
+
+    const headers = {
+      Authorization: `token ${cfg.token}`,
+      Accept: "application/vnd.github+json",
+    };
+
+    // 1) Buscar el sha del archivo actual (si existe, para poder reemplazarlo).
+    let sha;
+    try {
+      const getRes = await fetch(`${apiUrl}?ref=${encodeURIComponent(cfg.branch)}`, { headers });
+      if (getRes.ok) {
+        const getData = await getRes.json();
+        sha = getData.sha;
+      } else if (getRes.status !== 404) {
+        const errData = await getRes.json().catch(() => ({}));
+        throw new Error(errData.message || `Error al leer el archivo (${getRes.status})`);
+      }
+    } catch (e) {
+      if (e instanceof TypeError) throw new Error("No se pudo conectar con GitHub. Revisá tu internet.");
+      throw e;
+    }
+
+    // 2) Crear o reemplazar el archivo.
+    const putRes = await fetch(apiUrl, {
+      method: "PUT",
+      headers: { ...headers, "Content-Type": "application/json" },
+      body: JSON.stringify({
+        message: `Actualizar foto ${slot} de la galería`,
+        content: base64Content,
+        branch: cfg.branch,
+        ...(sha ? { sha } : {}),
+      }),
+    });
+
+    if (!putRes.ok) {
+      const errData = await putRes.json().catch(() => ({}));
+      throw new Error(errData.message || `Error al subir la foto (${putRes.status})`);
+    }
+  }
+
+  [1, 2, 3].forEach((slot) => {
+    const fileInput = document.getElementById(`ghFile${slot}`);
+    const preview = document.getElementById(`ghPreview${slot}`);
+    const status = document.getElementById(`ghStatus${slot}`);
+    const liveImg = document.getElementById(`galleryImg${slot}`);
+
+    if (liveImg) preview.src = liveImg.src;
+
+    fileInput.addEventListener("change", async () => {
+      const file = fileInput.files[0];
+      if (!file) return;
+
+      status.textContent = "Preparando...";
+      status.className = "gallery-slot-status";
+
+      try {
+        const dataUrl = await resizeImage(file, 1600);
+        preview.src = dataUrl;
+
+        status.textContent = "Subiendo a GitHub...";
+        await uploadToGithub(slot, dataUrl);
+
+        if (liveImg) liveImg.src = dataUrl;
+        status.textContent = "✅ ¡Publicada! En un minuto se actualiza en tu sitio.";
+        status.className = "gallery-slot-status is-success";
+      } catch (err) {
+        status.textContent = `❌ ${err.message}`;
+        status.className = "gallery-slot-status is-error";
+      }
+    });
   });
 })();

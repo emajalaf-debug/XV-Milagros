@@ -6,6 +6,18 @@
 <title>Mis 15 años - Milagros</title>
 <meta name="description" content="Invitación a Mis 15 años - Milagros">
 
+<!-- Vista previa al compartir el link (WhatsApp, Facebook, etc.) -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mis 15 años - Milagros">
+<meta property="og:description" content="¡Estás invitado a celebrar Mis 15 años! 21 de noviembre, 2026.">
+<meta property="og:image" content="assets/images/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mis 15 años - Milagros">
+<meta name="twitter:description" content="¡Estás invitado a celebrar Mis 15 años! 21 de noviembre, 2026.">
+<meta name="twitter:image" content="assets/images/hero.jpg">
+
+<link rel="icon" href="data:image/svg+xml,<svg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2032%2032'><path%20fill='%23A8707B'%20d='M16%2028%20C%2016%2028%203%2019.5%203%2011.5%20C%203%206.8%206.8%203%2011.5%203%20C%2013.8%203%2015.6%204.1%2016%205.7%20C%2016.4%204.1%2018.2%203%2020.5%203%20C%2025.2%203%2029%206.8%2029%2011.5%20C%2029%2019.5%2016%2028%2016%2028%20Z'/></svg>">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -86,6 +98,9 @@
     <a href="#" id="mapLink" target="_blank" rel="noopener" class="btn btn-outline">
       <span class="pin">📍</span> Ver mapa
     </a>
+    <a href="#" id="calendarLink" target="_blank" rel="noopener" class="btn btn-outline btn-calendar">
+      <span class="pin">🗓️</span> Agregar a mi calendario
+    </a>
   </div>
 </section>
 
@@ -148,13 +163,10 @@
   <p class="section-subtitle">Momentos guardados en el corazón</p>
   <span class="divider"></span>
 
-  <div class="gallery-grid">
-    <img class="reveal-item" src="assets/images/gallery-1.svg" alt="Foto 1" loading="lazy">
-    <img class="reveal-item" src="assets/images/gallery-2.svg" alt="Foto 2" loading="lazy">
-    <img class="reveal-item" src="assets/images/gallery-3.svg" alt="Foto 3" loading="lazy">
-    <img class="reveal-item" src="assets/images/gallery-4.svg" alt="Foto 4" loading="lazy">
-    <img class="reveal-item" src="assets/images/gallery-5.svg" alt="Foto 5" loading="lazy">
-    <img class="reveal-item" src="assets/images/gallery-6.svg" alt="Foto 6" loading="lazy">
+  <div class="gallery-grid" id="galleryGrid">
+    <img class="reveal-item" id="galleryImg1" src="assets/images/gallery-1.jpg" alt="Foto 1" loading="lazy">
+    <img class="reveal-item" id="galleryImg2" src="assets/images/gallery-2.jpg" alt="Foto 2" loading="lazy">
+    <img class="reveal-item" id="galleryImg3" src="assets/images/gallery-3.jpg" alt="Foto 3" loading="lazy">
   </div>
 </section>
 
@@ -243,6 +255,19 @@
   <button type="button" id="hostModeTrigger" class="host-mode-trigger" aria-label="Panel del organizador">•</button>
 </footer>
 
+<!-- ===== CARTEL DE CLAVE (panel del organizador) ===== -->
+<div id="passcodeOverlay" class="passcode-overlay" hidden>
+  <div class="passcode-card">
+    <p class="passcode-eyebrow">Panel privado</p>
+    <h3 class="passcode-title">Ingresá la clave</h3>
+    <p class="passcode-text">Esta sección es solo para el organizador de la fiesta.</p>
+    <input type="password" id="passcodeInput" class="passcode-input" placeholder="Clave" autocomplete="off">
+    <p class="passcode-error" id="passcodeError" hidden>Clave incorrecta, probá de nuevo.</p>
+    <button type="button" id="passcodeSubmit" class="btn btn-primary btn-block">Entrar</button>
+    <button type="button" id="passcodeCancel" class="passcode-cancel">Cancelar</button>
+  </div>
+</div>
+
 <!-- ===== PANEL DEL ORGANIZADOR (oculto) =====
      Sólo se muestra si el link tiene ?panel=organizador. No es visible
      para los invitados en el link normal de la invitación. -->
@@ -284,6 +309,69 @@
         </div>
         <p class="host-copied-msg" id="hostCopiedMsg" hidden>¡Copiado!</p>
       </details>
+    </div>
+
+    <!-- ===== FOTOS DE LA GALERÍA ===== -->
+    <hr class="host-divider">
+    <h2 class="host-title">Fotos de la galería</h2>
+    <p class="host-lead">
+      Subí hasta 3 fotos. Se publican directo en tu invitación (a todos los
+      invitados) — no hace falta tocar ningún código.
+    </p>
+
+    <details class="host-details host-github-setup" id="githubSetup">
+      <summary id="githubSetupSummary">⚙️ Conectar con GitHub (una sola vez)</summary>
+      <p class="host-note">
+        Esto conecta el panel con tu repositorio de GitHub para poder publicar
+        las fotos. Lo hacés una sola vez:
+      </p>
+      <ol class="host-instructions">
+        <li>Andá a <strong>github.com/settings/tokens</strong> (Settings → Developer settings → Personal access tokens → Tokens classic).</li>
+        <li>Tocá "Generate new token (classic)". Ponele un nombre, y en los permisos marcá la casilla <strong>"repo"</strong>.</li>
+        <li>Generalo y copiá el código que te da (empieza con "ghp_...") — solo se muestra una vez.</li>
+      </ol>
+
+      <label for="ghOwner">Tu usuario de GitHub</label>
+      <input type="text" id="ghOwner" placeholder="emajalaf-debug">
+
+      <label for="ghRepo">Nombre del repositorio</label>
+      <input type="text" id="ghRepo" placeholder="cumple-15">
+
+      <label for="ghBranch">Rama (dejalo así si no sabés)</label>
+      <input type="text" id="ghBranch" value="main">
+
+      <label for="ghToken">Token de acceso personal</label>
+      <input type="password" id="ghToken" placeholder="ghp_...">
+
+      <button type="button" id="ghSaveBtn" class="btn btn-primary btn-block">Guardar conexión</button>
+      <p class="host-copied-msg" id="ghSavedMsg" hidden>¡Conexión guardada en este navegador!</p>
+    </details>
+
+    <div class="gallery-uploader">
+      <div class="gallery-slot" data-slot="1">
+        <img class="gallery-slot-preview" id="ghPreview1" alt="Foto 1 actual">
+        <label class="btn btn-outline gallery-slot-btn">
+          Elegir foto 1
+          <input type="file" accept="image/*" id="ghFile1" hidden>
+        </label>
+        <p class="gallery-slot-status" id="ghStatus1"></p>
+      </div>
+      <div class="gallery-slot" data-slot="2">
+        <img class="gallery-slot-preview" id="ghPreview2" alt="Foto 2 actual">
+        <label class="btn btn-outline gallery-slot-btn">
+          Elegir foto 2
+          <input type="file" accept="image/*" id="ghFile2" hidden>
+        </label>
+        <p class="gallery-slot-status" id="ghStatus2"></p>
+      </div>
+      <div class="gallery-slot" data-slot="3">
+        <img class="gallery-slot-preview" id="ghPreview3" alt="Foto 3 actual">
+        <label class="btn btn-outline gallery-slot-btn">
+          Elegir foto 3
+          <input type="file" accept="image/*" id="ghFile3" hidden>
+        </label>
+        <p class="gallery-slot-status" id="ghStatus3"></p>
+      </div>
     </div>
   </div>
 </section>
