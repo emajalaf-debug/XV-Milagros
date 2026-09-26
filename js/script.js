@@ -213,32 +213,17 @@ if (revealEls.length && "IntersectionObserver" in window) {
   revealEls.forEach((el) => el.classList.add("is-visible"));
 }
 
-/* ============ SALUDO PERSONALIZADO (por familia/cantidad) ============
-   Si el link incluye ?familia=NOMBRE&cupo=NUMERO, se muestra un saludo
-   personalizado en la portada y se precargan esos datos en el formulario
-   de confirmación. Pensado para que el organizador genere un link
-   distinto para cada familia (ver herramienta "generador-invitaciones"). */
+/* ============ DATOS PERSONALIZADOS (por familia/cantidad) ============
+   Si el link incluye ?familia=NOMBRE&cupo=NUMERO, se muestra una tarjeta
+   fija con esos datos en la sección de Confirmación y se precargan en el
+   formulario. Pensado para que el organizador genere un link distinto
+   para cada familia (ver el panel privado del organizador). */
 (function () {
   const params = new URLSearchParams(window.location.search);
   const familia = params.get("familia");
   const cupo = params.get("cupo");
 
   if (!familia && !cupo) return;
-
-  const greetingEl = document.getElementById("guestGreeting");
-  let greetingText = "";
-  if (familia && cupo) {
-    greetingText = `Reservamos tu lugar, ${familia} — cupo para ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
-  } else if (familia) {
-    greetingText = `Reservamos tu lugar, ${familia}`;
-  } else {
-    greetingText = `Cupo reservado para ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
-  }
-
-  if (greetingEl) {
-    greetingEl.textContent = greetingText;
-    greetingEl.hidden = false;
-  }
 
   // Cartel fijo (no editable) en la sección de Confirmación, con el
   // nombre y el cupo que cargó el organizador — esto no se puede
