@@ -192,6 +192,12 @@
   <p class="section-subtitle section-subtitle--light">Acompañame a celebrar</p>
   <span class="divider divider--light"></span>
 
+  <div class="invite-card" id="inviteCard" hidden>
+    <p class="invite-card-label">Invitación para</p>
+    <p class="invite-card-name" id="inviteCardName"></p>
+    <p class="invite-card-cupo" id="inviteCardCupo"></p>
+  </div>
+
   <form class="rsvp-card reveal" id="rsvpForm">
     <label class="field">
       <span>Nombre y apellido</span>
@@ -207,7 +213,7 @@
     </label>
 
     <label class="field">
-      <span>Cantidad de acompañantes</span>
+      <span id="rsvpGuestsLabel">Cantidad de acompañantes</span>
       <input type="number" id="rsvpGuests" name="acompanantes" min="0" max="10" value="0">
     </label>
 

@@ -226,26 +226,54 @@ if (revealEls.length && "IntersectionObserver" in window) {
   if (!familia && !cupo) return;
 
   const greetingEl = document.getElementById("guestGreeting");
+  let greetingText = "";
+  if (familia && cupo) {
+    greetingText = `Reservamos tu lugar, ${familia} — cupo para ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
+  } else if (familia) {
+    greetingText = `Reservamos tu lugar, ${familia}`;
+  } else {
+    greetingText = `Cupo reservado para ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
+  }
+
   if (greetingEl) {
-    let text = "";
-    if (familia && cupo) {
-      text = `Reservamos tu lugar, ${familia} — cupo para ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
-    } else if (familia) {
-      text = `Reservamos tu lugar, ${familia}`;
-    } else {
-      text = `Cupo reservado para ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
-    }
-    greetingEl.textContent = text;
+    greetingEl.textContent = greetingText;
     greetingEl.hidden = false;
+  }
+
+  // Cartel fijo (no editable) en la sección de Confirmación, con el
+  // nombre y el cupo que cargó el organizador — esto no se puede
+  // modificar desde el formulario, queda como dato de referencia.
+  const inviteCard = document.getElementById("inviteCard");
+  const inviteCardName = document.getElementById("inviteCardName");
+  const inviteCardCupo = document.getElementById("inviteCardCupo");
+  if (inviteCard) {
+    if (familia) inviteCardName.textContent = familia;
+    else inviteCardName.remove();
+
+    if (cupo) {
+      inviteCardCupo.textContent = `Cupo asignado: ${cupo} ${cupo === "1" ? "persona" : "personas"}`;
+    } else {
+      inviteCardCupo.remove();
+    }
+    inviteCard.hidden = false;
   }
 
   const nameField = document.getElementById("rsvpName");
   if (nameField && familia) nameField.value = familia;
 
+  // El campo de acompañantes queda limitado al cupo asignado, y arranca
+  // completo (asumiendo que confirman todos, y lo bajan si van menos).
   const guestsField = document.getElementById("rsvpGuests");
+  const guestsLabel = document.getElementById("rsvpGuestsLabel");
   if (guestsField && cupo) {
     const n = parseInt(cupo, 10);
-    if (!Number.isNaN(n)) guestsField.value = Math.max(0, n - 1);
+    if (!Number.isNaN(n)) {
+      guestsField.max = n;
+      guestsField.value = n;
+      if (guestsLabel) {
+        guestsLabel.textContent = `¿Cuántos de las ${n} personas invitadas van a asistir?`;
+      }
+    }
   }
 })();
 
