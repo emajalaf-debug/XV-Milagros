@@ -906,3 +906,93 @@ body.host-mode {
     object-position: center 20%;
   }
 }
+
+/* ===== CARTEL DE CLAVE (panel del organizador) ===== */
+.passcode-overlay {
+  position: fixed;
+  inset: 0;
+  height: 100vh;
+  height: 100dvh;
+  z-index: 200;
+  background: rgba(66, 42, 51, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.passcode-overlay[hidden] { display: none; }
+.passcode-card {
+  width: 100%;
+  max-width: 360px;
+  background: var(--cream-2);
+  border-radius: 22px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow:
+    0 0 0 1px rgba(201, 141, 160, 0.18),
+    0 0 40px rgba(201, 141, 160, 0.28),
+    0 18px 40px rgba(168, 112, 123, 0.14);
+  animation: passcodePop 0.3s ease;
+}
+@keyframes passcodePop {
+  from { opacity: 0; transform: scale(0.94) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+.passcode-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin: 0 0 6px;
+}
+.passcode-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: var(--wine);
+  margin: 0 0 10px;
+}
+.passcode-text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 22px;
+}
+.passcode-input {
+  width: 100%;
+  background: #fff;
+  border: 1px solid rgba(168,112,123,0.25);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--wine-dark);
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+.passcode-input:focus { outline: 2px solid var(--gold); outline-offset: 1px; }
+.passcode-input.is-shake { animation: passcodeShake 0.35s ease; }
+@keyframes passcodeShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  75% { transform: translateX(8px); }
+}
+.passcode-error {
+  color: #b23b3b;
+  font-size: 0.82rem;
+  margin: 0 0 16px;
+}
+.passcode-cancel {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  padding: 14px 0 0;
+  cursor: pointer;
+}
+.passcode-cancel:hover { color: var(--wine); }

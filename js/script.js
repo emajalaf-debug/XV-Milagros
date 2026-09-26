@@ -403,9 +403,9 @@ if (revealEls.length && "IntersectionObserver" in window) {
     if (currentFamilia) saludo = `¡Hola, ${currentFamilia}!`;
     let cupoTexto = "";
     if (currentCupo) {
-      cupoTexto = ` Les dejamos un cupo para ${currentCupo} ${currentCupo === "1" ? "persona" : "personas"}.`;
+      cupoTexto = ` Te dejo un cupo para ${currentCupo} ${currentCupo === "1" ? "persona" : "personas"}.`;
     }
-    return `${saludo} Los invitamos a celebrar Mis 15 Años de Milagros.${cupoTexto} Toda la info y la confirmación de asistencia acá: ${currentLink}`;
+    return `${saludo} Hay momentos en la vida que solo cobran sentido cuando los compartimos con la gente que queremos y que hace especial nuestro día a día. Mis 15 años son una alegría enorme y, en una noche tan importante para mí, tu presencia no puede faltar.\n\nMe encantaría que me acompañes a celebrar.${cupoTexto} Encontrá toda la información y confirmá tu asistencia acá: ${currentLink}`;
   }
 
   generateBtn.addEventListener("click", () => {
