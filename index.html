@@ -163,12 +163,20 @@
   <p class="section-subtitle">Momentos guardados en el corazón</p>
   <span class="divider"></span>
 
-  <div class="gallery-grid" id="galleryGrid">
-    <img class="reveal-item" id="galleryImg1" src="assets/images/gallery-1.jpg" alt="Foto 1" loading="lazy">
-    <img class="reveal-item" id="galleryImg2" src="assets/images/gallery-2.jpg" alt="Foto 2" loading="lazy">
-    <img class="reveal-item" id="galleryImg3" src="assets/images/gallery-3.jpg" alt="Foto 3" loading="lazy">
-    <img class="reveal-item" id="galleryImg4" src="assets/images/gallery-4.jpg" alt="Foto 4" loading="lazy">
-    <img class="reveal-item" id="galleryImg5" src="assets/images/gallery-5.jpg" alt="Foto 5" loading="lazy">
+  <div class="gallery-track-wrap">
+    <div class="gallery-track" id="galleryTrack">
+      <img src="assets/images/gallery-1.jpg" alt="Foto 1">
+      <img src="assets/images/gallery-2.jpg" alt="Foto 2">
+      <img src="assets/images/gallery-3.jpg" alt="Foto 3">
+      <img src="assets/images/gallery-4.jpg" alt="Foto 4">
+      <img src="assets/images/gallery-5.jpg" alt="Foto 5">
+      <!-- Se repiten para que el bucle sea continuo, sin corte -->
+      <img src="assets/images/gallery-1.jpg" alt="" aria-hidden="true">
+      <img src="assets/images/gallery-2.jpg" alt="" aria-hidden="true">
+      <img src="assets/images/gallery-3.jpg" alt="" aria-hidden="true">
+      <img src="assets/images/gallery-4.jpg" alt="" aria-hidden="true">
+      <img src="assets/images/gallery-5.jpg" alt="" aria-hidden="true">
+    </div>
   </div>
 </section>
 

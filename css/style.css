@@ -588,19 +588,51 @@ a { text-decoration: none; color: inherit; }
   margin: 0;
 }
 
-/* ===== GALERÍA ===== */
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-.gallery-grid img {
+/* ===== GALERÍA (tira que se desliza sola, en bucle) ===== */
+.gallery-track-wrap {
+  overflow: hidden;
   width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 20px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+.gallery-track {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  width: max-content;
+  padding: 30px 20px;
+  animation: galleryScroll 32s linear infinite;
+}
+.gallery-track:hover {
+  animation-play-state: paused;
+}
+@keyframes galleryScroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.gallery-track img {
+  height: 300px;
+  width: auto;
+  max-width: 260px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 14px 30px rgba(168, 112, 123, 0.25);
+  flex-shrink: 0;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.gallery-track img:nth-child(odd)  { transform: rotate(-4deg); }
+.gallery-track img:nth-child(even) { transform: rotate(4deg); }
+.gallery-track img:hover {
+  transform: scale(1.08) rotate(0deg);
+  box-shadow: 0 18px 38px rgba(168, 112, 123, 0.35);
+}
+
+@media (max-width: 480px) {
+  .gallery-track img { height: 220px; max-width: 190px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-track { animation: none; }
 }
 
 /* ===== REGALOS ===== */
@@ -732,39 +764,6 @@ a { text-decoration: none; color: inherit; }
 .reveal-item.is-visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-/* Stagger suave de las fotos de la galería */
-.gallery-grid .reveal-item:nth-child(1) { transition-delay: 0s; }
-.gallery-grid .reveal-item:nth-child(2) { transition-delay: 0.08s; }
-.gallery-grid .reveal-item:nth-child(3) { transition-delay: 0.16s; }
-.gallery-grid .reveal-item:nth-child(4) { transition-delay: 0.24s; }
-.gallery-grid .reveal-item:nth-child(5) { transition-delay: 0.32s; }
-.gallery-grid .reveal-item:nth-child(6) { transition-delay: 0.4s; }
-
-/* Entrada tipo "foto que cae", con una leve inclinación que alterna
-   de lado en cada imagen y un rebote suave al asentarse. */
-.gallery-grid .reveal-item {
-  transform: scale(0.8) rotate(-7deg) translateY(20px);
-  transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-.gallery-grid .reveal-item:nth-child(even) {
-  transform: scale(0.8) rotate(7deg) translateY(20px);
-}
-.gallery-grid .reveal-item.is-visible {
-  transform: scale(1) rotate(0deg) translateY(0);
-}
-
-/* Un leve realce al pasar el mouse/dedo por las fotos */
-.gallery-grid img {
-  transition: transform 0.4s ease, box-shadow 0.4s ease, opacity 0.7s ease;
-}
-.gallery-grid img:hover {
-  transform: scale(1.04) rotate(-1.5deg);
-  box-shadow: 0 12px 28px rgba(168, 112, 123, 0.25);
-}
-.gallery-grid img:last-child:nth-child(odd) {
-  grid-column: 1 / -1;
 }
 
 @media (prefers-reduced-motion: reduce) {
